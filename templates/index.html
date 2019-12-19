@@ -1,0 +1,134 @@
+{%extends "base.html"%}
+
+{%block title%}Cup n' Cake{%endblock%}
+
+{%block body%}
+<div class="container-fluid p-0">
+  <!-- Carousel -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 p-0">
+        <div class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div id="carousel1" class="carousel-image"></div>
+            </div>
+            <div class="carousel-item">
+              <div id="carousel2" class="carousel-image"></div>
+            </div>
+            <div class="carousel-item">
+              <div id="carousel3" class="carousel-image"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="title-content align-self-center">
+        <div class="col-12 p-0" style="color: white;">
+          <h1 class="display-1 mx-auto" style="font-family: 'Leckerli One', cursive;">Cup n' Cake</h1>
+          <p>- Cupcakes like never before -</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Varieties -->
+  <main class="container" id="main-content">
+    <h2 class="display2 text-center my-4" style="font-family: 'Pacifico', cursive;">Our Varieties</h2>
+    <div id="cards" class="container-fluid">
+      <div class="row">
+        {%for variety in varieties%}
+        <div class="col-12 col-md-6 col-lg-4 my-2" data-toggle="modal" data-target="#orderModal"
+          data-index={{varieties.index(variety)}}>
+          <a href="#{{variety.name}}" class="card h-100 text-decoration-none text-body">
+            <img src="static/images/{{variety.image}}" class=" card-img-top w-100">
+            <div class="card-body">
+              <h5 class="card-title">{{variety.name}}</h5>
+              <p class="card-text">{{variety.description}}</p>
+            </div>
+          </a>
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+  </main>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-light fixed-top" id="navbar">
+    <a class="navbar-brand" href="/" style="font-family: 'Leckerli One', cursive;">Cup n' Cake</a>
+    {%if loggedIn%}
+    <div>
+      <span class="mx-2">{{user.email}}</span>
+      <form action="/logout" method="post" style="display: inline-block;">
+        <button type="submit" class="btn btn-outline-danger">Logout</button>
+      </form>
+    </div>
+    {%else%}
+    <a href="/login" class="btn btn-outline-primary">Login</a>
+    {%endif%}
+  </nav>
+
+  <!-- Modal -->
+  <div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" style="height: 80%">
+      <div class="modal-content" style="height: 80%">
+        <div class="modal-body p-0">
+          <div class="row" id="modal-row" style="height: 100%">
+            <div class="col-4 modal-image"></div>
+            <div class="col-8 p-4">
+              <h1 class="modal-title"></h1>
+              <p class="modal-description"></p>
+              <div class="alert alert-success text-center">
+                <p class="lead modal-price m-0"></p>
+              </div>
+              <!-- <div class="modal-counter">
+                  <i class="fas fa-minus bg-dark"></i>
+                  <input type="number" class="count" name="qty" value="1">
+                  <i class="fas fa-plus bg-dark"></i>
+                </div> -->
+              {%if loggedIn%}
+              <button type="button" class="btn btn-primary btn-block">Order Now</button>
+              {%else%}
+              <a type="button" class="btn btn-outline-primary btn-block" href="/login">Login to Order</a>
+              {%endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{%endblock%}
+
+{%block scripts%}
+<!-- Modal scripts -->
+<script>
+  if (window.pageYOffset > window.innerHeight - 50) {
+    $('.navbar').show();
+    $('.navbar').css('display', 'flex');
+  }
+  else {
+    $('.navbar').hide();
+  }
+  $('#orderModal').on('show.bs.modal', function (event) {
+    var itemCard = $(event.relatedTarget)
+    var varietyIndex = itemCard.data('index')
+    var modal = $(this)
+    var varieties = JSON.parse($('<textarea />').html("{{jsonVarieties}}").text())
+    modal.find('.modal-title').text(varieties[varietyIndex].name)
+    modal.find('.modal-image').css('background-image', `url(${'static/images/' + varieties[varietyIndex].image})`)
+    modal.find('.modal-description').text(varieties[varietyIndex].description)
+    modal.find('.modal-price').text(varieties[varietyIndex].price)
+  })
+  $(function () {
+    $(window).scroll(function () {
+      if (window.pageYOffset > window.innerHeight - 50) {
+        $('.navbar').fadeIn();
+        $('.navbar').css('display', 'flex');
+      } else {
+        $('.navbar').fadeOut();
+      }
+    });
+  });
+</script>
+{%endblock%}

@@ -1,0 +1,50 @@
+{%extends "base.html"%}
+
+{%block title%}Login | Cup n' Cake{%endblock%}
+
+{%block body%}
+<video autoplay muted loop id="bgVideo">
+  <source src="static/videos/cake_trim.mp4" type="video/mp4">
+  <!-- Original video by Preppy Kitchen on YouTube (https://www.youtube.com/watch?v=1q3lIaxaqmg) -->
+</video>
+<div class="container-fluid w-100" id="loginDiv">
+  <div class="row" style="height: 100vh;">
+    <div class="col-10 col-md-8 col-lg-6 col-xl-4 align-self-center mx-auto">
+      <div class="card p-4">
+        <h1 class="display-4 text-center">{{"Signup" if signup else "Login"}}</h1>
+        <form class="card-body" method="post" action={{"/signup" if signup else "/login"}}>
+          <div class="form-group">
+            <label for="form-name">Email</label>
+            <input type="text" class="form-control" name="email" />
+          </div>
+          <div class="form-group">
+            <label for="form-name">Password</label>
+            <input type="password" class="form-control" name="password" />
+          </div>
+          {%if signup%}
+          <div class="form-group">
+            <label for="form-address">Address</label>
+            <textarea class="form-control" name="address"></textarea>
+          </div>
+          {%endif%}
+          {%if signup and error%}
+          <div class="alert alert-danger text-center">
+            This email is already signed up
+          </div>
+          {%endif%}
+          {%if not signup and error%}
+          <div class="alert alert-danger text-center">
+            The email or password provided is incorrect
+          </div>
+          {%endif%}
+          <button type="submit" class="btn btn-primary btn-block my-3">{{"Signup" if signup else "Login"}}</button>
+          <div class="signup text-center">
+            <p class="m-0">{{"Already a fan?" if signup else "Haven't tasted us yet?"}}</p class="text-center">
+            <a href={{"/login" if signup else "/signup"}} class="text-decoration-none">{{"Login" if signup else "Signup"}}</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

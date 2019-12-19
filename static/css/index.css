@@ -1,0 +1,83 @@
+#navbar {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0px 1px 7px 0px;
+    display: none;
+}
+
+.title-content {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.carousel-image {
+    height: 100vh;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#carousel1 {
+    background-image: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(../images/butter.jpg);
+}
+
+#carousel2 {
+    background-image: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(../images/chocolate.jpg);
+}
+
+#carousel3 {
+    background-image: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(../images/unicorn.jpg);
+}
+
+#modal-row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.modal-image {
+    background-position: bottom;
+    background-size: cover;
+}
+
+.modal-open main {
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+}
+
+.modal .fas {
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    ;
+}
+
+.modal input[type="number"] {
+    border: 0;
+    width: 10px;
+}
+
+/* Login */
+
+#bgVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+#loginDiv {
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: rgb(52, 58, 64, 0.4);
+}
+
+#loginDiv .card {
+    background-color: rgb(255, 255, 255, 0.9);
+}
