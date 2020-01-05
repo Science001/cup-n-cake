@@ -24,8 +24,8 @@
       </div>
       <div class="title-content align-self-center">
         <div class="col-12 p-0" style="color: white;">
-          <h1 class="display-1 mx-auto" style="font-family: 'Leckerli One', cursive;">Cup n' Cake</h1>
-          <p>- Cupcakes like never before -</p>
+          <h1 class="display-1 mx-auto onscroll-fade" style="font-family: 'Leckerli One', cursive;">Cup n' Cake</h1>
+          <p class="onscroll-fade">- Cupcakes like never before -</p>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
     <a class="navbar-brand" href="/" style="font-family: 'Leckerli One', cursive;">Cup n' Cake</a>
     {%if loggedIn%}
     <div>
-      <span class="mx-2">{{user.email}}</span>
+      <span class="mx-2 d-none d-sm-inline">{{user.email}}</span>
       <form action="/logout" method="post" style="display: inline-block;">
         <button type="submit" class="btn btn-outline-danger">Logout</button>
       </form>
@@ -103,12 +103,18 @@
 {%block scripts%}
 <!-- Modal scripts -->
 <script>
-  if (window.pageYOffset > window.innerHeight - 50) {
+  var navHeight = $('.navbar').height();
+  $('main').css({ marginTop: navHeight + 'px' });
+  if (window.pageYOffset > 5) {
     $('.navbar').show();
     $('.navbar').css('display', 'flex');
+    $('.carousel-image').css('height', '20vh')
+    $('.onscroll-fade').fadeOut()
   }
   else {
     $('.navbar').hide();
+    $('carousel-image').css('height', '100vh')
+    $('.onscroll-fade').fadeIn()
   }
   $('#orderModal').on('show.bs.modal', function (event) {
     var itemCard = $(event.relatedTarget)
@@ -122,11 +128,15 @@
   })
   $(function () {
     $(window).scroll(function () {
-      if (window.pageYOffset > window.innerHeight - 50) {
+      if (window.pageYOffset > 5) {
         $('.navbar').fadeIn();
         $('.navbar').css('display', 'flex');
+        $('.carousel-image').css('height', '20vh')
+        $('.onscroll-fade').fadeOut()
       } else {
         $('.navbar').fadeOut();
+        $('.carousel-image').css('height', '100vh')
+        $('.onscroll-fade').fadeIn()
       }
     });
   });
